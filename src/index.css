@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== GILROY FONT ===== */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Thin.ttf') format('truetype');
+  font-weight: 100;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-UltraLight.ttf') format('truetype');
+  font-weight: 200;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./assets/fonts/Gilroy-Heavy.ttf') format('truetype');
+  font-weight: 950;
+}
+
+/* ===== BOOKCHAT WARM AMBER THEME ===== */
+:root {
+  --bc-bg-deep:     #0d0a07;
+  --bc-bg-main:     #13100c;
+  --bc-bg-card:     #1c1610;
+  --bc-bg-elevated: #241c12;
+  --bc-border:      #2e2418;
+  --bc-border-light:#3d3020;
+
+  --bc-amber-deep:  #7c4a00;
+  --bc-amber:       #c47a1e;
+  --bc-amber-bright:#e8a94a;
+  --bc-amber-glow:  #f5c876;
+  --bc-amber-soft:  rgba(196,122,30,0.15);
+
+  --bc-text-primary:   #f0e6d3;
+  --bc-text-secondary: #b8a898;
+  --bc-text-muted:     #7a6a58;
+  --bc-text-accent:    #e8a94a;
+
+  --bc-gold:      #d4a853;
+  --bc-parchment: #f5edd8;
+
+  --bc-shadow-sm:   0 2px 8px rgba(0,0,0,0.4);
+  --bc-shadow-md:   0 4px 20px rgba(0,0,0,0.5);
+  --bc-shadow-glow: 0 0 30px rgba(196,122,30,0.15);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bc-bg-deep);
+  color: var(--bc-text-primary);
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 700;
+  color: var(--bc-text-primary);
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bc-bg-main); }
+::-webkit-scrollbar-thumb { background: var(--bc-amber-deep); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bc-amber); }
+
+::selection { background: var(--bc-amber-soft); color: var(--bc-amber-glow); }
+
+/* ===== COMPONENTS ===== */
+.bc-card {
+  background: var(--bc-bg-card);
+  border: 1px solid var(--bc-border);
+  border-radius: 16px;
+  box-shadow: var(--bc-shadow-md);
+}
+
+.bc-input {
+  width: 100%;
+  background: var(--bc-bg-elevated);
+  border: 1px solid var(--bc-border);
+  border-radius: 12px;
+  padding: 13px 16px;
+  color: var(--bc-text-primary);
+  font-family: 'Gilroy', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.bc-input:focus {
+  border-color: var(--bc-amber);
+  box-shadow: 0 0 0 3px var(--bc-amber-soft);
+}
+.bc-input::placeholder { color: var(--bc-text-muted); }
+
+.bc-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--bc-text-secondary);
+  margin-bottom: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bc-error {
+  color: #e07050;
+  font-size: 0.75rem;
+  margin-top: 5px;
+}
+
+.bc-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--bc-amber-deep), var(--bc-amber));
+  color: var(--bc-parchment);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-family: 'Gilroy', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.02em;
+}
+.bc-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--bc-amber), var(--bc-amber-bright));
+  box-shadow: 0 6px 24px rgba(196,122,30,0.45);
+  transform: translateY(-1px);
+}
+.bc-btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.bc-btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: var(--bc-text-primary);
+  border: 1px solid var(--bc-border);
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-family: 'Gilroy', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.bc-btn-secondary:hover {
+  border-color: var(--bc-amber);
+  background: var(--bc-amber-soft);
+  color: var(--bc-amber-bright);
+}
+
+.bc-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.25rem 0;
+}
+.bc-divider::before,
+.bc-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--bc-border);
+}
+.bc-divider span {
+  color: var(--bc-text-muted);
+  font-size: 0.75rem;
+}
+
+.bc-page {
+  min-height: 100vh;
+  background: var(--bc-bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.bc-glow-blob {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: var(--bc-amber);
+  filter: blur(100px);
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.spin { animation: spin 1s linear infinite; }
