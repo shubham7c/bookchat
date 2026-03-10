@@ -9,7 +9,7 @@ import { Bell, Heart, MessageSquare, Share2, Bookmark, MoreHorizontal, Feather, 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 
 const FRIENDS = [
-  { id: 1, name: "Priya",  emoji: "👩‍🎨", color: "#c47a1e", writing: false },
+  { id: 1, name: "Priya",  emoji: "👩‍🎨", color: "var(--bc-amber)", writing: false },
   { id: 2, name: "Rohan",  emoji: "👨‍🔬", color: "#6b4fa0", writing: true  },
   { id: 3, name: "Aryan",  emoji: "🧑‍💻", color: "#2a7a9a", writing: false },
   { id: 4, name: "Sneha",  emoji: "👩‍💼", color: "#5a8a3a", writing: false },
@@ -93,7 +93,7 @@ const NOTIFS = [
 function Header({ user }) {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
-  const bg     = useTransform(scrollY, [0, 55], ["rgba(250,246,239,0)",    "rgba(250,246,239,0.97)"   ]);
+  const bg     = useTransform(scrollY, [0, 55], ["var(--bc-bg)00",    "var(--bc-blur)"   ]);
   const border = useTransform(scrollY, [0, 55], ["rgba(196,122,30,0)",     "rgba(196,122,30,0.12)"    ]);
   const [open, setOpen] = useState(false);
 
@@ -120,8 +120,8 @@ function Header({ user }) {
             </svg>
           </motion.div>
           <div>
-            <div style={{ fontSize: "1rem", fontWeight: 800, color: "#1a1208", letterSpacing: "-0.025em", lineHeight: 1.1, fontFamily: "Gilroy, sans-serif" }}>BookChat</div>
-            <div style={{ fontSize: "0.5rem", color: "#c47a1e", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, fontFamily: "Gilroy, sans-serif" }}>✦ For Readers</div>
+            <div style={{ fontSize: "1rem", fontWeight: 800, color: "var(--bc-text-primary)", letterSpacing: "-0.025em", lineHeight: 1.1, fontFamily: "Gilroy, sans-serif" }}>BookChat</div>
+            <div style={{ fontSize: "0.5rem", color: "var(--bc-amber)", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, fontFamily: "Gilroy, sans-serif" }}>✦ For Readers</div>
           </div>
         </motion.div>
 
@@ -129,7 +129,7 @@ function Header({ user }) {
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <motion.button whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.91 }}
             onClick={() => setOpen(p => !p)}
-            style={{ width: 38, height: 38, borderRadius: 13, background: open ? "rgba(196,122,30,0.14)" : "rgba(196,122,30,0.07)", border: "1px solid rgba(196,122,30,0.14)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", position: "relative", transition: "all 0.2s" }}>
+            style={{ width: 38, height: 38, borderRadius: 13, background: open ? "rgba(196,122,30,0.14)" : "rgba(196,122,30,0.07)", border: "1px solid var(--bc-border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", position: "relative", transition: "all 0.2s" }}>
             <Bell size={17} color={open ? "#c47a1e" : "#7a6040"} strokeWidth={1.8}/>
             <AnimatePresence>
               {!open && (
@@ -141,7 +141,7 @@ function Header({ user }) {
 
           <motion.button whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.93 }}
             onClick={() => navigate("/profile")}
-            style={{ width: 38, height: 38, borderRadius: 13, background: "linear-gradient(145deg,#f0ddb0,#dfc870)", border: "1.5px solid rgba(196,122,30,0.35)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", overflow: "hidden", fontSize: "0.95rem", fontWeight: 800, color: "#8b5e00", fontFamily: "Gilroy, sans-serif", boxShadow: "0 2px 10px rgba(196,122,30,0.2)" }}>
+            style={{ width: 38, height: 38, borderRadius: 13, background: "linear-gradient(145deg,#f0ddb0,#dfc870)", border: "1.5px solid rgba(196,122,30,0.35)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", overflow: "hidden", fontSize: "0.95rem", fontWeight: 800, color: "var(--bc-text-amber)", fontFamily: "Gilroy, sans-serif", boxShadow: "0 2px 10px rgba(196,122,30,0.2)" }}>
             {user?.photoURL
               ? <img src={user.photoURL} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
               : (user?.displayName?.[0]?.toUpperCase() || "📖")
@@ -159,12 +159,12 @@ function Header({ user }) {
             <motion.div key="npanel"
               initial={{ opacity: 0, y: -10, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.96 }}
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{ position: "fixed", top: 66, right: 14, width: "min(306px, calc(100vw - 28px))", background: "rgba(255,253,248,0.99)", border: "1px solid rgba(196,122,30,0.13)", borderRadius: 20, zIndex: 46, overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.13)" }}>
+              style={{ position: "fixed", top: 66, right: 14, width: "min(306px, calc(100vw - 28px))", background: "var(--bc-bg-card)", border: "1px solid var(--bc-border)", borderRadius: 20, zIndex: 46, overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.13)" }}>
               <div style={{ padding: "14px 16px 10px", borderBottom: "1px solid rgba(196,122,30,0.07)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "0.82rem", fontWeight: 800, color: "#1a1208", fontFamily: "Gilroy, sans-serif" }}>Notifications</span>
+                <span style={{ fontSize: "0.82rem", fontWeight: 800, color: "var(--bc-text-primary)", fontFamily: "Gilroy, sans-serif" }}>Notifications</span>
                 <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                  <span style={{ fontSize: "0.62rem", color: "#c47a1e", fontWeight: 700, cursor: "pointer", fontFamily: "Gilroy, sans-serif" }}>Mark all read</span>
-                  <motion.button whileHover={{ scale: 1.15 }} onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#b0a090", display: "flex", padding: 2 }}>
+                  <span style={{ fontSize: "0.62rem", color: "var(--bc-amber)", fontWeight: 700, cursor: "pointer", fontFamily: "Gilroy, sans-serif" }}>Mark all read</span>
+                  <motion.button whileHover={{ scale: 1.15 }} onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--bc-text-faint)", display: "flex", padding: 2 }}>
                     <X size={13}/>
                   </motion.button>
                 </div>
@@ -175,8 +175,8 @@ function Header({ user }) {
                   style={{ display: "flex", gap: 11, padding: "11px 16px", borderBottom: i < NOTIFS.length - 1 ? "1px solid rgba(196,122,30,0.05)" : "none", cursor: "pointer", transition: "background 0.15s", background: n.unread ? "rgba(196,122,30,0.028)" : "transparent" }}>
                   <span style={{ fontSize: "1rem", flexShrink: 0, marginTop: 1 }}>{n.icon}</span>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: "0.76rem", color: "#2a1e10", lineHeight: 1.45, fontWeight: n.unread ? 600 : 400, fontFamily: "Gilroy, sans-serif" }}>{n.text}</p>
-                    <p style={{ fontSize: "0.64rem", color: "#b0a090", marginTop: 2, fontFamily: "Gilroy, sans-serif" }}>{n.time} ago</p>
+                    <p style={{ fontSize: "0.76rem", color: "var(--bc-text-secondary)", lineHeight: 1.45, fontWeight: n.unread ? 600 : 400, fontFamily: "Gilroy, sans-serif" }}>{n.text}</p>
+                    <p style={{ fontSize: "0.64rem", color: "var(--bc-text-faint)", marginTop: 2, fontFamily: "Gilroy, sans-serif" }}>{n.time} ago</p>
                   </div>
                   {n.unread && <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c47a1e", flexShrink: 0, marginTop: 5 }}/>}
                 </motion.div>
@@ -210,7 +210,7 @@ function FriendStrip() {
                 {f.writing ? "✒️" : "📖"}
               </div>
             </div>
-            <span style={{ fontSize: "0.59rem", color: "#5a4830", fontWeight: 700, fontFamily: "Gilroy, sans-serif" }}>{f.name}</span>
+            <span style={{ fontSize: "0.59rem", color: "var(--bc-text-muted)", fontWeight: 700, fontFamily: "Gilroy, sans-serif" }}>{f.name}</span>
           </motion.div>
         ))}
       </div>
@@ -222,24 +222,24 @@ function FriendStrip() {
 
 function TrendingRow() {
   return (
-    <div style={{ background: "linear-gradient(135deg,rgba(196,122,30,0.07),rgba(196,122,30,0.02))", border: "1px solid rgba(196,122,30,0.13)", borderRadius: 20, padding: "14px 16px", marginBottom: 12 }}>
+    <div style={{ background: "linear-gradient(135deg,rgba(196,122,30,0.07),rgba(196,122,30,0.02))", border: "1px solid var(--bc-border)", borderRadius: 20, padding: "14px 16px", marginBottom: 12 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
         <TrendingUp size={13} color="#c47a1e" strokeWidth={2.2}/>
-        <span style={{ fontSize: "0.67rem", fontWeight: 800, color: "#8b5e00", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "Gilroy, sans-serif" }}>Trending Today</span>
+        <span style={{ fontSize: "0.67rem", fontWeight: 800, color: "var(--bc-text-amber)", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "Gilroy, sans-serif" }}>Trending Today</span>
       </div>
       <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
         {TRENDING.map((b, i) => (
           <motion.div key={i}
             initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.08 }}
             whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.97 }}
-            style={{ flexShrink: 0, width: 118, padding: 12, background: "rgba(255,253,248,0.92)", border: "1px solid rgba(196,122,30,0.11)", borderRadius: 14, cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,0.04)" }}>
+            style={{ flexShrink: 0, width: 118, padding: 12, background: "var(--bc-bg-card)", border: "1px solid rgba(196,122,30,0.11)", borderRadius: 14, cursor: "pointer", boxShadow: "var(--bc-shadow-card)" }}>
             <div style={{ fontSize: "1.9rem", textAlign: "center", marginBottom: 7 }}>{b.cover}</div>
-            <div style={{ fontSize: "0.74rem", fontWeight: 700, color: "#1a1208", marginBottom: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: "Gilroy, sans-serif" }}>{b.title}</div>
-            <div style={{ fontSize: "0.63rem", color: "#8a7560", marginBottom: 7, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: "Gilroy, sans-serif" }}>{b.author}</div>
+            <div style={{ fontSize: "0.74rem", fontWeight: 700, color: "var(--bc-text-primary)", marginBottom: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: "Gilroy, sans-serif" }}>{b.title}</div>
+            <div style={{ fontSize: "0.63rem", color: "var(--bc-text-muted)", marginBottom: 7, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontFamily: "Gilroy, sans-serif" }}>{b.author}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
               {i === 0 && <span style={{ fontSize: "0.7rem" }}>🔥</span>}
-              <span style={{ fontSize: "0.66rem", fontWeight: 700, color: "#c47a1e", fontFamily: "Gilroy, sans-serif" }}>{b.sparks}</span>
-              <span style={{ fontSize: "0.6rem", color: "#b0a090", fontFamily: "Gilroy, sans-serif" }}>sparks</span>
+              <span style={{ fontSize: "0.66rem", fontWeight: 700, color: "var(--bc-amber)", fontFamily: "Gilroy, sans-serif" }}>{b.sparks}</span>
+              <span style={{ fontSize: "0.6rem", color: "var(--bc-text-faint)", fontFamily: "Gilroy, sans-serif" }}>sparks</span>
             </div>
           </motion.div>
         ))}
@@ -280,7 +280,7 @@ function FeedCard({ post, idx }) {
     <motion.article
       initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
       transition={{ delay: idx * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      style={{ background: "rgba(255,253,248,0.97)", border: "1px solid rgba(196,122,30,0.09)", borderRadius: 22, marginBottom: 12, overflow: "hidden", boxShadow: "0 2px 18px rgba(0,0,0,0.04)" }}>
+      style={{ background: "var(--bc-bg-card)", border: "1px solid var(--bc-border-card)", borderRadius: 22, marginBottom: 12, overflow: "hidden", boxShadow: "var(--bc-shadow-card)" }}>
 
       <div style={{ height: 2, background: `linear-gradient(90deg,transparent 5%,${tc.accent}55 40%,${tc.accent}55 60%,transparent 95%)` }}/>
 
@@ -292,7 +292,7 @@ function FeedCard({ post, idx }) {
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
-              <span style={{ fontSize: "0.87rem", fontWeight: 700, color: "#1a1208", fontFamily: "Gilroy, sans-serif" }}>{post.user.name}</span>
+              <span style={{ fontSize: "0.87rem", fontWeight: 700, color: "var(--bc-text-primary)", fontFamily: "Gilroy, sans-serif" }}>{post.user.name}</span>
               <span style={{ fontSize: "0.54rem", fontWeight: 700, color: rs.color, background: rs.bg, padding: "2px 7px", borderRadius: 50, letterSpacing: "0.06em", textTransform: "uppercase", border: `1px solid ${rs.color}18`, fontFamily: "Gilroy, sans-serif" }}>{rs.label}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
@@ -300,10 +300,10 @@ function FeedCard({ post, idx }) {
                 <span>{tc.icon}</span>{tc.label}
               </span>
               <span style={{ color: "rgba(196,122,30,0.3)", fontSize: "0.6rem" }}>·</span>
-              <span style={{ fontSize: "0.67rem", color: "#b0a090", fontFamily: "Gilroy, sans-serif" }}>{post.time}</span>
+              <span style={{ fontSize: "0.67rem", color: "var(--bc-text-faint)", fontFamily: "Gilroy, sans-serif" }}>{post.time}</span>
             </div>
           </div>
-          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} style={{ background: "none", border: "none", cursor: "pointer", color: "#c0b090", padding: 4, display: "flex", flexShrink: 0 }}>
+          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--bc-text-faint)", padding: 4, display: "flex", flexShrink: 0 }}>
             <MoreHorizontal size={16}/>
           </motion.button>
         </div>
@@ -311,10 +311,10 @@ function FeedCard({ post, idx }) {
         {/* Book pill */}
         {post.book && (
           <motion.div whileHover={{ scale: 1.01 }}
-            style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 12px", borderRadius: 11, marginBottom: 10, background: "linear-gradient(135deg,rgba(196,122,30,0.09),rgba(196,122,30,0.04))", border: "1px solid rgba(196,122,30,0.14)", cursor: "pointer" }}>
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 12px", borderRadius: 11, marginBottom: 10, background: "linear-gradient(135deg,rgba(196,122,30,0.09),rgba(196,122,30,0.04))", border: "1px solid var(--bc-border)", cursor: "pointer" }}>
             <span style={{ fontSize: "1.1rem" }}>{post.book.cover}</span>
             <div>
-              <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#8b5e00", fontFamily: "Gilroy, sans-serif" }}>{post.book.title}</div>
+              <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "var(--bc-text-amber)", fontFamily: "Gilroy, sans-serif" }}>{post.book.title}</div>
               <div style={{ fontSize: "0.63rem", color: "#a08050", fontFamily: "Gilroy, sans-serif" }}>{post.book.author}</div>
             </div>
             <ChevronRight size={12} color="rgba(196,122,30,0.45)"/>
@@ -329,7 +329,7 @@ function FeedCard({ post, idx }) {
         )}
 
         {/* Content */}
-        <p style={{ fontSize: post.type === "excerpt" ? "0.92rem" : "0.85rem", color: "#2a1e10", lineHeight: post.type === "excerpt" ? 1.78 : 1.63, fontStyle: post.type === "excerpt" ? "italic" : "normal", marginBottom: 10, fontFamily: "Gilroy, sans-serif" }}>
+        <p style={{ fontSize: post.type === "excerpt" ? "0.92rem" : "0.85rem", color: "var(--bc-text-secondary)", lineHeight: post.type === "excerpt" ? 1.78 : 1.63, fontStyle: post.type === "excerpt" ? "italic" : "normal", marginBottom: 10, fontFamily: "Gilroy, sans-serif" }}>
           {post.content}
         </p>
 
@@ -346,7 +346,7 @@ function FeedCard({ post, idx }) {
         {/* Tags */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 10 }}>
           {post.tags.map(t => (
-            <motion.span key={t} whileHover={{ color: "#8b5e00" }} style={{ fontSize: "0.67rem", color: "#9a7830", fontWeight: 600, cursor: "pointer", transition: "color 0.15s", fontFamily: "Gilroy, sans-serif" }}>{t}</motion.span>
+            <motion.span key={t} whileHover={{ color: "var(--bc-text-amber)" }} style={{ fontSize: "0.67rem", color: "#9a7830", fontWeight: 600, cursor: "pointer", transition: "color 0.15s", fontFamily: "Gilroy, sans-serif" }}>{t}</motion.span>
           ))}
         </div>
       </div>
@@ -364,7 +364,7 @@ function FeedCard({ post, idx }) {
         <motion.button whileTap={{ scale: 0.88 }}
           style={{ display: "flex", alignItems: "center", gap: 5, padding: "7px 10px", borderRadius: 10, background: "transparent", border: "none", cursor: "pointer" }}>
           <MessageSquare size={17} strokeWidth={1.8} color="#9a8870"/>
-          <span style={{ fontSize: "0.73rem", fontWeight: 600, color: "#9a8870", fontFamily: "Gilroy, sans-serif" }}>{post.comments}</span>
+          <span style={{ fontSize: "0.73rem", fontWeight: 600, color: "var(--bc-text-muted)", fontFamily: "Gilroy, sans-serif" }}>{post.comments}</span>
         </motion.button>
 
         <div style={{ flex: 1 }}/>
@@ -401,12 +401,12 @@ function Greeting({ user }) {
       <div style={{ position: "absolute", top: 0, left: "12%", right: "12%", height: 1, background: "linear-gradient(90deg,transparent,rgba(196,122,30,0.32),transparent)" }}/>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontSize: "0.67rem", color: "#a09070", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 3, fontFamily: "Gilroy, sans-serif" }}>{emoji} {label}</p>
-          <h1 style={{ fontSize: "clamp(1rem,4vw,1.15rem)", fontWeight: 800, color: "#1a1208", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "Gilroy, sans-serif" }}>
+          <p style={{ fontSize: "0.67rem", color: "var(--bc-text-faint)", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 3, fontFamily: "Gilroy, sans-serif" }}>{emoji} {label}</p>
+          <h1 style={{ fontSize: "clamp(1rem,4vw,1.15rem)", fontWeight: 800, color: "var(--bc-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "Gilroy, sans-serif" }}>
             {user?.displayName?.split(" ")[0] || "Reader"}
           </h1>
           {user?.personalityTag && (
-            <p style={{ fontSize: "0.69rem", color: "#c47a1e", fontWeight: 700, marginTop: 3, fontFamily: "Gilroy, sans-serif" }}>✦ {user.personalityTag}</p>
+            <p style={{ fontSize: "0.69rem", color: "var(--bc-amber)", fontWeight: 700, marginTop: 3, fontFamily: "Gilroy, sans-serif" }}>✦ {user.personalityTag}</p>
           )}
         </div>
         <motion.span animate={{ rotate: [0,6,-6,0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} style={{ fontSize: "2.4rem", opacity: 0.75 }}>📚</motion.span>
@@ -428,7 +428,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div ref={pageRef} style={{ minHeight: "100dvh", background: "#faf6ef", fontFamily: "Gilroy, sans-serif" }}>
+    <div ref={pageRef} style={{ minHeight: "100dvh", background: "var(--bc-bg)", fontFamily: "Gilroy, sans-serif" }}>
 
       {/* Ambient background */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
@@ -446,10 +446,10 @@ export default function Home() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <Sparkles size={13} color="#c47a1e" strokeWidth={2.2}/>
-            <span style={{ fontSize: "0.74rem", fontWeight: 800, color: "#1a1208", letterSpacing: "0.02em", fontFamily: "Gilroy, sans-serif" }}>Your Feed</span>
+            <span style={{ fontSize: "0.74rem", fontWeight: 800, color: "var(--bc-text-primary)", letterSpacing: "0.02em", fontFamily: "Gilroy, sans-serif" }}>Your Feed</span>
           </div>
-          <motion.button whileHover={{ color: "#c47a1e" }}
-            style={{ background: "none", border: "none", cursor: "pointer", color: "#b0a090", fontSize: "0.68rem", fontFamily: "Gilroy, sans-serif", fontWeight: 600, display: "flex", alignItems: "center", gap: 3, transition: "color 0.2s" }}>
+          <motion.button whileHover={{ color: "var(--bc-amber)" }}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "var(--bc-text-faint)", fontSize: "0.68rem", fontFamily: "Gilroy, sans-serif", fontWeight: 600, display: "flex", alignItems: "center", gap: 3, transition: "color 0.2s" }}>
             Filter <ChevronRight size={11}/>
           </motion.button>
         </div>
@@ -457,7 +457,7 @@ export default function Home() {
         {FEED.map((post, i) => <FeedCard key={post.id} post={post} idx={i}/>)}
 
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
-          style={{ textAlign: "center", padding: "20px 0 6px", color: "#c0b090", fontSize: "0.67rem", fontWeight: 600, letterSpacing: "0.14em", fontFamily: "Gilroy, sans-serif" }}>
+          style={{ textAlign: "center", padding: "20px 0 6px", color: "var(--bc-text-faint)", fontSize: "0.67rem", fontWeight: 600, letterSpacing: "0.14em", fontFamily: "Gilroy, sans-serif" }}>
           ✦ &nbsp; You're all caught up &nbsp; ✦
         </motion.p>
       </main>

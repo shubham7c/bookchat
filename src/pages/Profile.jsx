@@ -20,6 +20,8 @@ import {
   BookOpen, PenLine, Award, Star, Globe, Lock, Users,
   Grid, List, Bookmark
 } from 'lucide-react';
+import { ThemeToggle } from '../components/shared/ThemeToggle';
+import { useThemeStore } from '../store/themeStore';
 
 // ─── BADGE CONFIG ─────────────────────────────────────────────────────────────
 const BADGES = {
@@ -135,7 +137,7 @@ function ShinyBadge({ type, size = 'md', showLabel = true }) {
 function SectionHead({ title, action }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-      <span style={{ fontSize: '0.68rem', fontWeight: 800, color: '#1a1208', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'Gilroy, sans-serif' }}>
+      <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--bc-text-primary)', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'Gilroy, sans-serif' }}>
         {title}
       </span>
       {action}
@@ -158,12 +160,12 @@ function InlineEdit({ value, onSave, placeholder, multiline = false, maxLen = 12
 
   if (!editing) return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-      <span style={{ flex: 1, fontSize: '0.88rem', color: value ? '#2a1e10' : '#b0a090', fontFamily: 'Gilroy, sans-serif', lineHeight: 1.6, fontStyle: value ? 'normal' : 'italic' }}>
+      <span style={{ flex: 1, fontSize: '0.88rem', color: value ? 'var(--bc-text-primary)' : 'var(--bc-text-faint)', fontFamily: 'Gilroy, sans-serif', lineHeight: 1.6, fontStyle: value ? 'normal' : 'italic' }}>
         {value || placeholder}
       </span>
       <motion.button whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.9 }}
         onClick={() => { setDraft(value || ''); setEditing(true); }}
-        style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#c47a1e', padding: 3, flexShrink: 0, display: 'flex' }}>
+        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--bc-amber)', padding: 3, flexShrink: 0, display: 'flex' }}>
         <Edit3 size={14} strokeWidth={2}/>
       </motion.button>
     </div>
@@ -173,18 +175,18 @@ function InlineEdit({ value, onSave, placeholder, multiline = false, maxLen = 12
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       {multiline
         ? <textarea ref={inputRef} value={draft} onChange={e => setDraft(e.target.value)} maxLength={maxLen} rows={3}
-            style={{ width: '100%', background: '#fffdf8', border: '1.5px solid rgba(196,122,30,0.4)', borderRadius: 10, padding: '10px 12px', color: '#1a1208', fontFamily: 'Gilroy, sans-serif', fontSize: '0.88rem', outline: 'none', resize: 'none', lineHeight: 1.55, boxShadow: '0 0 0 3px rgba(196,122,30,0.07)' }}/>
+            style={{ width: '100%', background: 'var(--bc-bg-input-focus)', border: '1.5px solid var(--bc-border-focus)', borderRadius: 10, padding: '10px 12px', color: 'var(--bc-text-primary)', fontFamily: 'Gilroy, sans-serif', fontSize: '0.88rem', outline: 'none', resize: 'none', lineHeight: 1.55, boxShadow: '0 0 0 3px rgba(196,122,30,0.07)' }}/>
         : <input ref={inputRef} value={draft} onChange={e => setDraft(e.target.value)} maxLength={maxLen}
-            style={{ width: '100%', background: '#fffdf8', border: '1.5px solid rgba(196,122,30,0.4)', borderRadius: 10, padding: '10px 12px', color: '#1a1208', fontFamily: 'Gilroy, sans-serif', fontSize: '0.88rem', outline: 'none', boxShadow: '0 0 0 3px rgba(196,122,30,0.07)' }}/>
+            style={{ width: '100%', background: 'var(--bc-bg-input-focus)', border: '1.5px solid var(--bc-border-focus)', borderRadius: 10, padding: '10px 12px', color: 'var(--bc-text-primary)', fontFamily: 'Gilroy, sans-serif', fontSize: '0.88rem', outline: 'none', boxShadow: '0 0 0 3px rgba(196,122,30,0.07)' }}/>
       }
-      {maxLen && <div style={{ textAlign: 'right', fontSize: '0.62rem', color: '#b0a090', fontFamily: 'Gilroy, sans-serif' }}>{draft.length}/{maxLen}</div>}
+      {maxLen && <div style={{ textAlign: 'right', fontSize: '0.62rem', color: 'var(--bc-text-faint)', fontFamily: 'Gilroy, sans-serif' }}>{draft.length}/{maxLen}</div>}
       <div style={{ display: 'flex', gap: 8 }}>
         <motion.button onClick={save} whileTap={{ scale: 0.95 }}
           style={{ flex: 1, padding: '9px', borderRadius: 10, background: 'linear-gradient(135deg,#c47a1e,#e8a840)', border: 'none', color: '#fff', fontFamily: 'Gilroy, sans-serif', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
           <Check size={13} strokeWidth={2.5}/> Save
         </motion.button>
         <motion.button onClick={() => setEditing(false)} whileTap={{ scale: 0.95 }}
-          style={{ padding: '9px 14px', borderRadius: 10, background: '#f0ebe0', border: '1px solid rgba(196,122,30,0.15)', color: '#8a7060', fontFamily: 'Gilroy, sans-serif', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+          style={{ padding: '9px 14px', borderRadius: 10, background: 'var(--bc-bg-chip)', border: '1px solid var(--bc-border)', color: 'var(--bc-text-muted)', fontFamily: 'Gilroy, sans-serif', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
           <X size={13}/>
         </motion.button>
       </div>
@@ -194,6 +196,8 @@ function InlineEdit({ value, onSave, placeholder, multiline = false, maxLen = 12
 
 // ─── BADGE PICKER MODAL ───────────────────────────────────────────────────────
 function BadgePicker({ current, onSelect, onClose }) {
+  const { theme } = useThemeStore();
+  const isDark = theme === 'dark';
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(10,7,3,0.65)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', padding: '0 0 0 0' }}
@@ -201,15 +205,15 @@ function BadgePicker({ current, onSelect, onClose }) {
       <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
         transition={{ type: 'spring', stiffness: 300, damping: 32 }}
         onClick={e => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: 500, background: 'rgba(255,253,248,0.99)', borderRadius: '24px 24px 0 0', padding: '24px 20px 36px', boxShadow: '0 -20px 60px rgba(0,0,0,0.18)' }}>
+        style={{ width: '100%', maxWidth: 500, background: isDark ? '#171208' : '#fffdf6', borderRadius: '24px 24px 0 0', padding: '24px 20px 36px', boxShadow: isDark ? '0 -8px 40px rgba(0,0,0,0.7)' : '0 -8px 40px rgba(0,0,0,0.1)' }}>
 
         {/* Handle */}
         <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(196,122,30,0.2)', margin: '0 auto 20px' }}/>
 
-        <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#1a1208', letterSpacing: '-0.02em', marginBottom: 5, fontFamily: 'Gilroy, sans-serif' }}>
+        <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--bc-text-primary)', letterSpacing: '-0.02em', marginBottom: 5, fontFamily: 'Gilroy, sans-serif' }}>
           Choose Your Badge
         </h3>
-        <p style={{ fontSize: '0.75rem', color: '#9a8870', fontFamily: 'Gilroy, sans-serif', marginBottom: 22 }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--bc-text-muted)', fontFamily: 'Gilroy, sans-serif', marginBottom: 22 }}>
           This appears on your profile. Choose what fits you best.
         </p>
 
@@ -221,15 +225,15 @@ function BadgePicker({ current, onSelect, onClose }) {
               style={{
                 display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px',
                 borderRadius: 16, cursor: 'pointer', textAlign: 'left',
-                background: current === key ? 'rgba(196,122,30,0.07)' : 'rgba(245,240,232,0.7)',
+                background: current === key ? 'rgba(196,122,30,0.07)' : 'var(--bc-bg-chip)',
                 border: `1.5px solid ${current === key ? 'rgba(196,122,30,0.4)' : 'rgba(196,122,30,0.1)'}`,
                 boxShadow: current === key ? '0 4px 16px rgba(196,122,30,0.1)' : 'none',
                 transition: 'all 0.2s',
               }}>
               <ShinyBadge type={key} size="sm" showLabel={false}/>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#1a1208', fontFamily: 'Gilroy, sans-serif' }}>{b.label}</div>
-                <div style={{ fontSize: '0.72rem', color: '#9a8870', fontFamily: 'Gilroy, sans-serif' }}>{b.desc}</div>
+                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--bc-text-primary)', fontFamily: 'Gilroy, sans-serif' }}>{b.label}</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--bc-text-muted)', fontFamily: 'Gilroy, sans-serif' }}>{b.desc}</div>
               </div>
               {current === key && <Check size={16} color="#c47a1e" strokeWidth={2.5}/>}
             </motion.button>
@@ -242,6 +246,8 @@ function BadgePicker({ current, onSelect, onClose }) {
 
 // ─── CONFIRM MODAL ────────────────────────────────────────────────────────────
 function ConfirmModal({ title, body, confirmLabel, danger, onConfirm, onCancel, extraField }) {
+  const { theme } = useThemeStore();
+  const isDark = theme === 'dark';
   const [val, setVal] = useState('');
   const [show, setShow] = useState(false);
   return (
@@ -251,15 +257,15 @@ function ConfirmModal({ title, body, confirmLabel, danger, onConfirm, onCancel, 
       <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 280, damping: 24 }}
         onClick={e => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: 360, background: 'rgba(255,253,248,0.99)', borderRadius: 22, padding: '26px 22px', boxShadow: '0 24px 80px rgba(0,0,0,0.25)' }}>
+        style={{ width: '100%', maxWidth: 360, background: isDark ? '#171208' : '#fffdf6', borderRadius: 22, padding: '26px 22px', boxShadow: isDark ? '0 24px 80px rgba(0,0,0,0.75)' : '0 24px 80px rgba(0,0,0,0.15)' }}>
 
         <div style={{ fontSize: '2rem', marginBottom: 12, textAlign: 'center' }}>{danger ? '⚠️' : '✦'}</div>
-        <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#1a1208', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Gilroy, sans-serif', textAlign: 'center' }}>{title}</h3>
-        <p style={{ fontSize: '0.8rem', color: '#7a6040', lineHeight: 1.6, fontFamily: 'Gilroy, sans-serif', marginBottom: 18, textAlign: 'center' }}>{body}</p>
+        <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--bc-text-primary)', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Gilroy, sans-serif', textAlign: 'center' }}>{title}</h3>
+        <p style={{ fontSize: '0.8rem', color: 'var(--bc-text-muted)', lineHeight: 1.6, fontFamily: 'Gilroy, sans-serif', marginBottom: 18, textAlign: 'center' }}>{body}</p>
 
         {extraField && (
           <div style={{ marginBottom: 16 }}>
-            <label style={{ fontSize: '0.63rem', fontWeight: 700, color: '#6a5840', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'block', marginBottom: 7, fontFamily: 'Gilroy, sans-serif' }}>
+            <label style={{ fontSize: '0.63rem', fontWeight: 700, color: 'var(--bc-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'block', marginBottom: 7, fontFamily: 'Gilroy, sans-serif' }}>
               {extraField.label}
             </label>
             <div style={{ position: 'relative' }}>
@@ -267,11 +273,11 @@ function ConfirmModal({ title, body, confirmLabel, danger, onConfirm, onCancel, 
                 type={show ? 'text' : extraField.type || 'text'}
                 placeholder={extraField.placeholder}
                 value={val} onChange={e => setVal(e.target.value)}
-                style={{ width: '100%', background: '#f5f0e8', border: '1px solid rgba(196,122,30,0.22)', borderRadius: 10, padding: '11px 40px 11px 14px', color: '#1a1208', fontFamily: 'Gilroy, sans-serif', fontSize: '0.88rem', outline: 'none' }}
+                style={{ width: '100%', background: 'var(--bc-bg-input)', border: '1px solid var(--bc-border-input)', borderRadius: 10, padding: '11px 40px 11px 14px', color: 'var(--bc-text-primary)', fontFamily: 'Gilroy, sans-serif', fontSize: '0.88rem', outline: 'none' }}
               />
               {extraField.type === 'password' && (
                 <button type="button" onClick={() => setShow(p => !p)}
-                  style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#8a7560', display: 'flex' }}>
+                  style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--bc-text-muted)', display: 'flex' }}>
                   {show ? <EyeOff size={14}/> : <Eye size={14}/>}
                 </button>
               )}
@@ -281,7 +287,7 @@ function ConfirmModal({ title, body, confirmLabel, danger, onConfirm, onCancel, 
 
         <div style={{ display: 'flex', gap: 10 }}>
           <motion.button whileTap={{ scale: 0.96 }} onClick={onCancel}
-            style={{ flex: 1, padding: '12px', borderRadius: 12, background: '#f0ebe0', border: '1px solid rgba(196,122,30,0.15)', color: '#6a5840', fontFamily: 'Gilroy, sans-serif', fontSize: '0.87rem', fontWeight: 600, cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '12px', borderRadius: 12, background: 'var(--bc-bg-chip)', border: '1px solid var(--bc-border)', color: 'var(--bc-text-muted)', fontFamily: 'Gilroy, sans-serif', fontSize: '0.87rem', fontWeight: 600, cursor: 'pointer' }}>
             Cancel
           </motion.button>
           <motion.button whileTap={{ scale: 0.96 }} onClick={() => onConfirm(val)}
@@ -298,6 +304,8 @@ function ConfirmModal({ title, body, confirmLabel, danger, onConfirm, onCancel, 
 export default function Profile() {
   const navigate = useNavigate();
   const { user, setUser } = useAuthStore();
+  const { theme } = useThemeStore();
+  const isDark = theme === 'dark';
   const pageRef = useRef(null);
   const fileRef = useRef(null);
 
@@ -394,19 +402,19 @@ export default function Profile() {
   const currentPrivacy = privacyOpts.find(p => p.value === (profileData?.privacyMode || 'public')) || privacyOpts[0];
 
   if (loading) return (
-    <div style={{ minHeight: '100dvh', background: '#faf6ef', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ minHeight: '100dvh', background: isDark ? '#0f0d09' : '#faf6ef', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
         style={{ width: 28, height: 28, borderRadius: '50%', border: '2.5px solid rgba(196,122,30,0.15)', borderTop: '2.5px solid #c47a1e' }}/>
     </div>
   );
 
   return (
-    <div ref={pageRef} style={{ minHeight: '100dvh', background: '#faf6ef', fontFamily: 'Gilroy, sans-serif' }}>
+    <div ref={pageRef} style={{ minHeight: '100dvh', background: isDark ? '#0f0d09' : '#faf6ef', fontFamily: 'Gilroy, sans-serif' }}>
 
       {/* Ambient */}
       <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-        <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '50vw', height: '50vw', borderRadius: '50%', background: 'radial-gradient(circle,rgba(196,122,30,0.05) 0%,transparent 65%)' }}/>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(196,122,30,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(196,122,30,0.018) 1px,transparent 1px)', backgroundSize: '52px 52px' }}/>
+        <div style={{ position: 'absolute', top: '-15%', right: '-15%', width: '60vw', height: '60vw', borderRadius: '50%', background: isDark ? 'radial-gradient(circle,rgba(196,122,30,0.04) 0%,transparent 65%)' : 'radial-gradient(circle,rgba(196,122,30,0.07) 0%,transparent 65%)' }}/>
+        <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '40vw', height: '40vw', borderRadius: '50%', background: isDark ? 'radial-gradient(circle,rgba(196,122,30,0.02) 0%,transparent 65%)' : 'radial-gradient(circle,rgba(196,122,30,0.04) 0%,transparent 65%)' }}/>
       </div>
 
       <main style={{ position: 'relative', zIndex: 1, maxWidth: 520, margin: '0 auto', padding: '20px 14px 100px' }}>
@@ -418,18 +426,18 @@ export default function Profile() {
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#c47a1e" strokeWidth="1.8" strokeLinecap="round"/>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#c47a1e" strokeWidth="1.8"/>
             </svg>
-            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1a1208', letterSpacing: '-0.02em' }}>My Profile</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--bc-text-primary)', letterSpacing: '-0.02em' }}>My Profile</span>
           </div>
           <motion.button whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }}
             onClick={() => setSettingsOpen(true)}
-            style={{ width: 38, height: 38, borderRadius: 13, background: 'rgba(196,122,30,0.07)', border: '1px solid rgba(196,122,30,0.13)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            style={{ width: 38, height: 38, borderRadius: 13, background: 'rgba(196,122,30,0.07)', border: '1px solid var(--bc-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <Settings size={17} color="#7a6040" strokeWidth={1.8}/>
           </motion.button>
         </div>
 
         {/* ── Profile hero ── */}
-        <div style={{ background: 'rgba(255,253,248,0.97)', border: '1px solid rgba(196,122,30,0.09)', borderRadius: 22, padding: '22px 18px 18px', marginBottom: 14, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: 0, left: '15%', right: '15%', height: 1, background: 'linear-gradient(90deg,transparent,rgba(196,122,30,0.2),transparent)' }}/>
+        <div style={{ background: isDark ? '#171208' : '#fffdf6', border: `1px solid ${isDark ? 'rgba(196,122,30,0.1)' : 'rgba(196,122,30,0.08)'}`, borderRadius: 22, padding: '22px 18px 18px', marginBottom: 14, boxShadow: isDark ? '0 2px 12px rgba(0,0,0,0.35)' : '0 4px 20px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: 0, left: '15%', right: '15%', height: 1, background: 'linear-gradient(90deg,transparent,var(--bc-shimmer-top),transparent)' }}/>
 
           {/* Photo + Badge row */}
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, marginBottom: 16 }}>
@@ -440,7 +448,7 @@ export default function Profile() {
                 style={{ width: 82, height: 82, borderRadius: 22, overflow: 'hidden', cursor: 'pointer', background: 'linear-gradient(145deg,#f0ddb0,#dfc870)', border: '2.5px solid rgba(196,122,30,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(196,122,30,0.2)', position: 'relative' }}>
                 {profileData?.photoURL
                   ? <img src={profileData.photoURL} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }}/>
-                  : <span style={{ fontSize: '2rem', fontWeight: 800, color: '#8b5e00' }}>{profileData?.displayName?.[0]?.toUpperCase() || '📖'}</span>
+                  : <span style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--bc-text-amber)' }}>{profileData?.displayName?.[0]?.toUpperCase() || '📖'}</span>
                 }
                 {/* Hover overlay */}
                 <motion.div initial={{ opacity: 0 }} whileHover={{ opacity: 1 }}
@@ -453,7 +461,7 @@ export default function Profile() {
               </motion.div>
               <input ref={fileRef} type="file" accept="image/*" onChange={handlePhotoChange} style={{ display: 'none' }}/>
               {/* Camera badge */}
-              <div style={{ position: 'absolute', bottom: -3, right: -3, width: 24, height: 24, borderRadius: 8, background: '#c47a1e', border: '2px solid #faf6ef', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(196,122,30,0.4)' }}>
+              <div style={{ position: 'absolute', bottom: -3, right: -3, width: 24, height: 24, borderRadius: 8, background: '#c47a1e', border: `2px solid ${isDark ? '#0f0d09' : '#faf6ef'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(196,122,30,0.4)' }}>
                 <Camera size={11} color="#fff" strokeWidth={2.2}/>
               </div>
             </div>
@@ -466,11 +474,11 @@ export default function Profile() {
                 onSave={v => saveField('displayName', v)}
                 maxLen={50}
               />
-              <div style={{ fontSize: '0.76rem', color: '#c47a1e', fontWeight: 700, marginTop: 3 }}>
+              <div style={{ fontSize: '0.76rem', color: 'var(--bc-amber)', fontWeight: 700, marginTop: 3 }}>
                 @{profileData?.username || 'username'}
               </div>
               {profileData?.dob && (
-                <div style={{ fontSize: '0.67rem', color: '#b0a090', marginTop: 2 }}>
+                <div style={{ fontSize: '0.67rem', color: 'var(--bc-text-faint)', marginTop: 2 }}>
                   🎂 {new Date(profileData.dob).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </div>
               )}
@@ -486,7 +494,7 @@ export default function Profile() {
 
           {/* Bio */}
           <div style={{ padding: '12px 0', borderTop: '1px solid rgba(196,122,30,0.07)', borderBottom: '1px solid rgba(196,122,30,0.07)', marginBottom: 14 }}>
-            <div style={{ fontSize: '0.6rem', fontWeight: 700, color: '#b0a090', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 7 }}>Bio</div>
+            <div style={{ fontSize: '0.6rem', fontWeight: 700, color: 'var(--bc-text-faint)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 7 }}>Bio</div>
             <InlineEdit
               value={profileData?.bio}
               placeholder="Write a short bio — what kind of reader or writer are you?"
@@ -498,16 +506,16 @@ export default function Profile() {
           {/* Badge pick / change */}
           <motion.button whileHover={{ scale: 1.01, x: 2 }} whileTap={{ scale: 0.98 }}
             onClick={() => setShowBadgePicker(true)}
-            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '11px 13px', borderRadius: 13, background: 'rgba(196,122,30,0.05)', border: '1px solid rgba(196,122,30,0.12)', cursor: 'pointer', transition: 'all 0.2s' }}>
+            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '11px 13px', borderRadius: 13, background: 'rgba(196,122,30,0.05)', border: '1px solid var(--bc-border)', cursor: 'pointer', transition: 'all 0.2s' }}>
             {profileData?.badge
               ? <ShinyBadge type={profileData.badge} size="sm" showLabel={false}/>
               : <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(196,122,30,0.1)', border: '1.5px dashed rgba(196,122,30,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Award size={16} color="#c47a1e" strokeWidth={1.8}/></div>
             }
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#1a1208' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--bc-text-primary)' }}>
                 {profileData?.badge ? BADGES[profileData.badge]?.label : 'Set your badge'}
               </div>
-              <div style={{ fontSize: '0.68rem', color: '#9a8870' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--bc-text-muted)' }}>
                 {profileData?.badge ? 'Tap to change' : 'Reader · Writer · Author'}
               </div>
             </div>
@@ -517,14 +525,14 @@ export default function Profile() {
 
         {/* ── Reading Preferences ── */}
         {(profileData?.genres?.length > 0 || profileData?.readingVibe) && (
-          <div style={{ background: 'rgba(255,253,248,0.97)', border: '1px solid rgba(196,122,30,0.09)', borderRadius: 22, padding: '16px 18px', marginBottom: 14, boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}>
+          <div style={{ background: isDark ? '#171208' : '#fffdf6', border: `1px solid ${isDark ? 'rgba(196,122,30,0.1)' : 'rgba(196,122,30,0.08)'}`, borderRadius: 22, padding: '16px 18px', marginBottom: 14, boxShadow: isDark ? '0 2px 12px rgba(0,0,0,0.35)' : '0 4px 20px rgba(0,0,0,0.05)' }}>
             <SectionHead title="Reading Preferences"/>
             {profileData?.genres?.length > 0 && (
               <div style={{ marginBottom: 12 }}>
-                <div style={{ fontSize: '0.62rem', fontWeight: 700, color: '#b0a090', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Favourite Genres</div>
+                <div style={{ fontSize: '0.62rem', fontWeight: 700, color: 'var(--bc-text-faint)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Favourite Genres</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {profileData.genres.map(g => (
-                    <span key={g} style={{ fontSize: '0.75rem', padding: '4px 11px', borderRadius: 50, background: 'rgba(196,122,30,0.08)', border: '1px solid rgba(196,122,30,0.15)', color: '#8b5e00', fontWeight: 600 }}>
+                    <span key={g} style={{ fontSize: '0.75rem', padding: '4px 11px', borderRadius: 50, background: 'rgba(196,122,30,0.08)', border: '1px solid var(--bc-border)', color: 'var(--bc-text-amber)', fontWeight: 600 }}>
                       {g.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                     </span>
                   ))}
@@ -532,15 +540,15 @@ export default function Profile() {
               </div>
             )}
             {profileData?.readingVibe && (
-              <div style={{ fontSize: '0.78rem', color: '#6a5040', fontStyle: 'italic' }}>
-                Reads for: <strong style={{ color: '#c47a1e' }}>{profileData.readingVibe.replace(/-/g, ' ')}</strong>
+              <div style={{ fontSize: '0.78rem', color: 'var(--bc-text-muted)', fontStyle: 'italic' }}>
+                Reads for: <strong style={{ color: 'var(--bc-amber)' }}>{profileData.readingVibe.replace(/-/g, ' ')}</strong>
               </div>
             )}
           </div>
         )}
 
         {/* ── Privacy setting ── */}
-        <div style={{ background: 'rgba(255,253,248,0.97)', border: '1px solid rgba(196,122,30,0.09)', borderRadius: 22, padding: '16px 18px', marginBottom: 14, boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}>
+        <div style={{ background: isDark ? '#171208' : '#fffdf6', border: `1px solid ${isDark ? 'rgba(196,122,30,0.1)' : 'rgba(196,122,30,0.08)'}`, borderRadius: 22, padding: '16px 18px', marginBottom: 14, boxShadow: isDark ? '0 2px 12px rgba(0,0,0,0.35)' : '0 4px 20px rgba(0,0,0,0.05)' }}>
           <SectionHead title="Privacy"/>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {privacyOpts.map(opt => {
@@ -555,8 +563,8 @@ export default function Profile() {
                     <Icon size={15} color={on ? '#c47a1e' : '#9a8070'} strokeWidth={1.8}/>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '0.83rem', fontWeight: on ? 700 : 500, color: on ? '#1a1208' : '#4a3820' }}>{opt.label}</div>
-                    <div style={{ fontSize: '0.67rem', color: '#9a8870' }}>{opt.desc}</div>
+                    <div style={{ fontSize: '0.83rem', fontWeight: on ? 700 : 500, color: on ? 'var(--bc-text-primary)' : 'var(--bc-text-secondary)' }}>{opt.label}</div>
+                    <div style={{ fontSize: '0.67rem', color: 'var(--bc-text-muted)' }}>{opt.desc}</div>
                   </div>
                   <AnimatePresence>
                     {on && <motion.div key="check" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
@@ -571,20 +579,20 @@ export default function Profile() {
         </div>
 
         {/* ── Account actions ── */}
-        <div style={{ background: 'rgba(255,253,248,0.97)', border: '1px solid rgba(196,122,30,0.09)', borderRadius: 22, padding: '16px 18px', marginBottom: 14, boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}>
+        <div style={{ background: isDark ? '#171208' : '#fffdf6', border: `1px solid ${isDark ? 'rgba(196,122,30,0.1)' : 'rgba(196,122,30,0.08)'}`, borderRadius: 22, padding: '16px 18px', marginBottom: 14, boxShadow: isDark ? '0 2px 12px rgba(0,0,0,0.35)' : '0 4px 20px rgba(0,0,0,0.05)' }}>
           <SectionHead title="Account"/>
 
           {/* Logout */}
           <motion.button
             whileHover={{ scale: 1.01, x: 2 }} whileTap={{ scale: 0.97 }}
             onClick={() => setLogoutConfirm(true)}
-            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 13, padding: '13px 14px', borderRadius: 14, background: 'rgba(196,122,30,0.05)', border: '1px solid rgba(196,122,30,0.11)', cursor: 'pointer', marginBottom: 10, transition: 'all 0.2s' }}>
-            <div style={{ width: 38, height: 38, borderRadius: 12, background: 'rgba(196,122,30,0.1)', border: '1px solid rgba(196,122,30,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 13, padding: '13px 14px', borderRadius: 14, background: 'rgba(196,122,30,0.05)', border: '1px solid var(--bc-border-card)', cursor: 'pointer', marginBottom: 10, transition: 'all 0.2s' }}>
+            <div style={{ width: 38, height: 38, borderRadius: 12, background: 'rgba(196,122,30,0.1)', border: '1px solid var(--bc-border-input)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <LogOut size={17} color="#c47a1e" strokeWidth={1.9}/>
             </div>
             <div style={{ flex: 1, textAlign: 'left' }}>
-              <div style={{ fontSize: '0.87rem', fontWeight: 700, color: '#1a1208' }}>Sign Out</div>
-              <div style={{ fontSize: '0.67rem', color: '#9a8870' }}>Logout from this device</div>
+              <div style={{ fontSize: '0.87rem', fontWeight: 700, color: 'var(--bc-text-primary)' }}>Sign Out</div>
+              <div style={{ fontSize: '0.67rem', color: 'var(--bc-text-muted)' }}>Logout from this device</div>
             </div>
             <ChevronRight size={15} color="rgba(196,122,30,0.4)"/>
           </motion.button>
@@ -599,7 +607,7 @@ export default function Profile() {
             </div>
             <div style={{ flex: 1, textAlign: 'left' }}>
               <div style={{ fontSize: '0.87rem', fontWeight: 700, color: '#c03228' }}>Delete Account</div>
-              <div style={{ fontSize: '0.67rem', color: '#9a8870' }}>Permanently delete all your data</div>
+              <div style={{ fontSize: '0.67rem', color: 'var(--bc-text-muted)' }}>Permanently delete all your data</div>
             </div>
             <ChevronRight size={15} color="rgba(192,50,40,0.3)"/>
           </motion.button>
@@ -607,7 +615,7 @@ export default function Profile() {
 
         {/* App version */}
         <div style={{ textAlign: 'center', padding: '8px 0' }}>
-          <p style={{ fontSize: '0.6rem', color: '#c0b090', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+          <p style={{ fontSize: '0.6rem', color: 'var(--bc-text-faint)', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
             BookChat ✦ v1.0 Beta
           </p>
         </div>
@@ -615,6 +623,45 @@ export default function Profile() {
       </main>
 
       <BottomNav active="profile"/>
+
+      {/* ── Settings Panel ── */}
+      <AnimatePresence>
+        {settingsOpen && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            style={{ position: 'fixed', inset: 0, zIndex: 60, background: isDark ? 'rgba(0,0,0,0.82)' : 'rgba(10,7,3,0.62)', backdropFilter: 'blur(10px)' }}
+            onClick={() => setSettingsOpen(false)}>
+            <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 32 }}
+              onClick={e => e.stopPropagation()}
+              style={{ position: 'absolute', bottom: 0, left: 0, right: 0, maxWidth: 500, margin: '0 auto', background: isDark ? '#171208' : '#fffdf6', borderRadius: '24px 24px 0 0', padding: '24px 20px 48px', boxShadow: isDark ? '0 -8px 40px rgba(0,0,0,0.7)' : '0 -8px 40px rgba(0,0,0,0.1)' }}>
+
+              {/* Handle */}
+              <div style={{ width: 36, height: 4, borderRadius: 2, background: 'var(--bc-border)', margin: '0 auto 20px' }}/>
+
+              <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--bc-text-primary)', letterSpacing: '-0.02em', marginBottom: 20, fontFamily: 'Gilroy, sans-serif' }}>
+                ⚙️ Settings
+              </h3>
+
+              {/* Theme */}
+              <div style={{ marginBottom: 22 }}>
+                <p style={{ fontSize: '0.62rem', fontWeight: 800, color: 'var(--bc-text-faint)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, fontFamily: 'Gilroy, sans-serif' }}>
+                  Appearance
+                </p>
+                <ThemeToggle compact={false} />
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: 1, background: 'var(--bc-border)', margin: '4px 0 20px' }}/>
+
+              {/* Close */}
+              <motion.button whileTap={{ scale: 0.97 }} onClick={() => setSettingsOpen(false)}
+                style={{ width: '100%', padding: '13px', borderRadius: 14, background: 'var(--bc-bg-chip)', border: '1px solid var(--bc-border)', color: 'var(--bc-text-muted)', fontFamily: 'Gilroy, sans-serif', fontSize: '0.87rem', fontWeight: 600, cursor: 'pointer' }}>
+                Done
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Modals ── */}
       <AnimatePresence>
@@ -661,6 +708,7 @@ export default function Profile() {
       <style>{`
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
         ::-webkit-scrollbar { display: none; }
+        html, body { background: ${isDark ? '#0f0d09' : '#faf6ef'} !important; margin: 0; padding: 0; }
       `}</style>
     </div>
   );
