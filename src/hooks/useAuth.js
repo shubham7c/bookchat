@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 import { useAuthStore } from '../store/authStore';
 
@@ -8,29 +8,45 @@ export function useAuthListener() {
   const { setUser, setLoading } = useAuthStore();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    let unsubFirestore = null;
+
+    const unsubAuth = onAuthStateChanged(auth, (firebaseUser) => {
+      // Cancel any previous Firestore listener
+      if (unsubFirestore) {
+        unsubFirestore();
+        unsubFirestore = null;
+      }
+
       if (firebaseUser) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
-          if (userDoc.exists()) {
-            setUser({ uid: firebaseUser.uid, ...userDoc.data() });
-          } else {
-            setUser({ 
-              uid: firebaseUser.uid, 
-              email: firebaseUser.email,
-              onboardingComplete: false 
-            });
+        // Live listener — store updates instantly when Firestore doc changes
+        // This is what makes the quiz redirect work: when quiz saves
+        // onboardingComplete: true, this fires and updates the store,
+        // so ProtectedRoute sees the new value and lets the user through.
+        unsubFirestore = onSnapshot(
+          doc(db, 'users', firebaseUser.uid),
+          (snap) => {
+            if (snap.exists()) {
+              setUser({ uid: firebaseUser.uid, ...snap.data() });
+            } else {
+              setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
+            }
+            setLoading(false);
+          },
+          (err) => {
+            console.error('Firestore listener error:', err);
+            setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
+            setLoading(false);
           }
-        } catch (err) {
-          console.error(err);
-          setUser(null);
-        }
+        );
       } else {
         setUser(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
-  }, [setUser, setLoading]);
+    return () => {
+      unsubAuth();
+      if (unsubFirestore) unsubFirestore();
+    };
+  }, []);
 }
